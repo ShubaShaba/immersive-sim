@@ -1,9 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-    [SerializeField] private float moveSpeed = 7;
+    [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float turnSmoothVelocity;
 
     [SerializeField] private Transform cameraPosition;
@@ -11,14 +12,24 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     private void Update() {
+        float playerHeight = 2f;
+        float playerRadius = .7f;
+        float moveDistance = moveSpeed * Time.deltaTime;
+
+        // Calculating the direction of movement relative to the camera
         Vector3 inputDirection = input.getInputDirectionNormalized();
+        Vector3 camForward = new Vector3 (cameraPosition.forward.x, 0, cameraPosition.forward.z);
+        Vector3 camRight = new Vector3 (cameraPosition.right.x, 0, cameraPosition.right.z);
+        Vector3 moveDirection = (inputDirection.z * camForward + inputDirection.x * camRight).normalized;
 
-        float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraPosition.eulerAngles.y;
+        float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
         float smoothedAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, 0.1f);
+        bool canMove = !Physics.CapsuleCast(
+            transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirection, moveDistance);
 
-        if (inputDirection.magnitude != 0) {
+        if (moveDirection.magnitude != 0) {
             transform.eulerAngles = Vector3.up * smoothedAngle;
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime, Space.Self);
+            transform.position += Convert.ToInt16(canMove) * moveDirection * moveDistance;
         }
     }
 }
