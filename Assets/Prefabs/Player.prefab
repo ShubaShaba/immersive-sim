@@ -228,5 +228,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  cameraPosition: {fileID: 0}
   turnSmoothVelocity: 0
+  cameraPosition: {fileID: 0}
+  input: {fileID: 0}
