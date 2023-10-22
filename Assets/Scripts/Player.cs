@@ -18,9 +18,12 @@ public class Player : MonoBehaviour {
 
     private void InteractionHandler () {
         float interactionDistance = 2f;
-
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit interactionObject, interactionDistance)) {
-            Debug.Log(interactionObject.transform);
+        bool inInteractRegion = Physics.Raycast(transform.position, transform.forward, out RaycastHit interactionObject, interactionDistance);
+        
+        // Check if the object is within reach and is interactable
+        if (inInteractRegion && interactionObject.transform.TryGetComponent(out IInteractable interactable)) {
+            interactable.Interact(transform);
+            Debug.Log(interactable.getInteractHint());
         }
     }
     /*
