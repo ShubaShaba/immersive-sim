@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -10,13 +11,24 @@ public class Player : MonoBehaviour {
     [SerializeField] private Transform cameraPosition;
     [SerializeField] private PlayerInput input;
 
-    // Update is called once per frame
+    /*
+    TODO: 
+    Rigidbody physics is processed within FixedUpdate() => Mixing it with transform.postion modification from Update()
+    causes visuals jitters in player's movement. 
+
+    Solution 1: Handle movement in FixedUpdate(). (Not a scalable solution in terms of the frames per second)
+    Solution 2: Write a simple gravitational script. 
+     */
+
+    private void Start() {
+        // Subscribing to the publisher (player input sysytem)
+        input.OnInteraction += InteractionHandler;   
+    }
     private void Update() {
         this.MovementHandler();
-        this.InteractionHandler();
     }
 
-    private void InteractionHandler () {
+    private void InteractionHandler (object sender, EventArgs args) {
         float interactionDistance = 2f;
         bool inInteractRegion = Physics.Raycast(transform.position, transform.forward, out RaycastHit interactionObject, interactionDistance);
         
@@ -26,14 +38,6 @@ public class Player : MonoBehaviour {
             Debug.Log(interactable.getInteractHint());
         }
     }
-    /*
-    TODO: 
-    Rigidbody physics is processed within FixedUpdate() => Mixing it with transform.postion modification from Update()
-    causes visuals jitters in player's movement. 
-
-    Solution 1: Handle movement in FixedUpdate(). (Not a scalable solution in terms of the frames per second)
-    Solution 2: Write a simple gravitational script. 
-     */
     private void MovementHandler() {
         float playerHeight = 2f;
         float playerRadius = .7f;
