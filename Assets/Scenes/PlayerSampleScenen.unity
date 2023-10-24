@@ -853,7 +853,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 930025985}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 8, z: -5}
+  m_LocalPosition: {x: 1.193, y: 8, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -941,7 +941,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.45934975, y: 2.7157426e-15, z: -1.4044108e-15, w: 0.88825554}
-  m_LocalPosition: {x: 0, y: 8, z: -5}
+  m_LocalPosition: {x: 1.193, y: 8, z: -5}
   m_LocalScale: {x: 1.1043037, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1297,7 +1297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4488636910295624752, guid: caf3e2007e31e2143b79d6a9e09fc508, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.193
       objectReference: {fileID: 0}
     - target: {fileID: 4488636910295624752, guid: caf3e2007e31e2143b79d6a9e09fc508, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1343,6 +1343,10 @@ PrefabInstance:
       propertyPath: cameraPosition
       value: 
       objectReference: {fileID: 963194228}
+    - target: {fileID: 4488636910295624758, guid: caf3e2007e31e2143b79d6a9e09fc508, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 4488636910295624758, guid: caf3e2007e31e2143b79d6a9e09fc508, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1464,7 +1468,7 @@ GameObject:
   m_Layer: 0
   m_Name: PlayerInput
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
