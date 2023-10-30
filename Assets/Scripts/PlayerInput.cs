@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour {
     private PlayerInputActions playerInputActions;
-
-    public event EventHandler OnInteraction;
     // TODO: Think how to get rid off player reference
     [SerializeField] private Transform playerPosition;
-    private IInteractable selectedInteractable;
 
+    private IInteractable selectedInteractable;
+    private InteractableSelectionVisual selectedInteractableVisual;
+    public event EventHandler OnInteraction;
+    
     private void Awake() {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
@@ -18,23 +19,29 @@ public class PlayerInput : MonoBehaviour {
     }
     
     private void Update() {
-        InteractableSelectionPlayerPos();   
+        InteractableSelectionPosBased(playerPosition);   
     }
 
     private void Interact_called(UnityEngine.InputSystem.InputAction.CallbackContext context) {
         if (OnInteraction != null) OnInteraction(this, EventArgs.Empty);
     }
 
-    private void InteractableSelectionPlayerPos() {
+    // TODO: Separate the visuals from selection logic
+    private void InteractableSelectionPosBased(Transform interactionTransform) {
         float interactionDistance = 2f;
-        bool inInteractRegion = Physics.Raycast(playerPosition.position, playerPosition.forward, out RaycastHit interactionObject, interactionDistance);
+        bool inInteractRegion = Physics.Raycast(interactionTransform.position, interactionTransform.forward, out RaycastHit interactionObject, interactionDistance);
 
         // Check if the object is within reach and is interactable
-        if (inInteractRegion && interactionObject.transform.TryGetComponent(out IInteractable interactable)) {
+        if (inInteractRegion && interactionObject.transform.TryGetComponent(out IInteractable interactable) && interactionObject.transform.TryGetComponent(out InteractableSelectionVisual interactableVisual)) {
             selectedInteractable = interactable;
+            selectedInteractableVisual?.Notify(selectedInteractable);
+            selectedInteractableVisual = interactableVisual;
         } else {
             selectedInteractable = null;
+            selectedInteractableVisual?.Notify(selectedInteractable);
+            selectedInteractableVisual = null;
         }
+        selectedInteractableVisual?.Notify(selectedInteractable);
     }
 
     public Vector3 getInputDirectionNormalized() {
