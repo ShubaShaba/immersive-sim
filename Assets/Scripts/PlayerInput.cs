@@ -26,6 +26,7 @@ public class PlayerInput : MonoBehaviour {
         if (OnInteraction != null) OnInteraction(this, EventArgs.Empty);
     }
 
+    // Selects an interactable object based on current Player's position
     private void InteractableSelectionPosBased(Transform interactionTransform) {
         float interactionDistance = 2f;
         bool interactionWithinReach = Physics.Raycast(interactionTransform.position, interactionTransform.forward, out RaycastHit interactionObject, interactionDistance);
@@ -38,21 +39,23 @@ public class PlayerInput : MonoBehaviour {
     private void SelectInteractable(Transform interactionTransform) {
         if (interactionTransform == null) {
             selectedInteractable = null;
-            return;
+        } else {
+            interactionTransform.TryGetComponent(out IInteractable interactable);
+            selectedInteractable = interactable;
         }
-        interactionTransform.TryGetComponent(out IInteractable interactable);
-        selectedInteractable = interactable;
     }
 
+    /* Updates the reference to the selected interactable's visual and notifies it
+     * In case the selected interactable has changed, both new and previous visuals get notification
+     */
     private void SelectInteractableVisual(Transform interactionTransform) {
         selectedInteractableVisual?.Notify(selectedInteractable);
-        if (interactionTransform == null) {
+        if (interactionTransform == null || !interactionTransform.TryGetComponent(out InteractableSelectionVisual interactableVisual)) {
             selectedInteractableVisual = null;
-            return;
+        } else {
+            selectedInteractableVisual = interactableVisual;
+            selectedInteractableVisual.Notify(selectedInteractable);
         }
-        interactionTransform.TryGetComponent(out InteractableSelectionVisual interactableVisual);
-        selectedInteractableVisual = interactableVisual;
-        selectedInteractableVisual?.Notify(selectedInteractable);
     }
 
     public Vector3 GetInputDirectionNormalized() {
