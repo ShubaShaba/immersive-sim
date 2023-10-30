@@ -10,7 +10,6 @@ public class Player : MonoBehaviour {
 
     [SerializeField] private Transform cameraPosition;
     [SerializeField] private PlayerInput input;
-    [SerializeField] private IInteractable selectedInteractable;
 
     /*
     TODO: 
@@ -27,25 +26,14 @@ public class Player : MonoBehaviour {
     }
     private void Update() {
         MovementHandler();
-        InteractableSelectionHandler();
     }
 
     private void InteractionHandler (object sender, EventArgs args) {
+        IInteractable selectedInteractable = input.getSelectedInteractable();
+
         if (selectedInteractable != null) {
             selectedInteractable.Interact(transform);
             Debug.Log(selectedInteractable.getInteractHint());
-        }
-    }
-    // TODO: Separate the selection logic from Player.cs (to input system)
-    private void InteractableSelectionHandler() {
-        float interactionDistance = 2f;
-        bool inInteractRegion = Physics.Raycast(transform.position, transform.forward, out RaycastHit interactionObject, interactionDistance);
-
-        // Check if the object is within reach and is interactable
-        if (inInteractRegion && interactionObject.transform.TryGetComponent(out IInteractable interactable)) {
-            selectedInteractable = interactable;
-        } else {
-            selectedInteractable = null;
         }
     }
 
