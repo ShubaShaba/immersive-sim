@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
     }
 
     private void InteractionHandler (object sender, EventArgs args) {
-        IInteractable selectedInteractable = input.getSelectedInteractable();
+        IInteractable selectedInteractable = input.GetSelectedInteractable();
 
         if (selectedInteractable != null) {
             selectedInteractable.Interact(transform);
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour {
         float moveDistance = moveSpeed * Time.deltaTime;
 
         // Calculating the direction of movement relative to the camera
-        Vector3 inputDirection = input.getInputDirectionNormalized();
+        Vector3 inputDirection = input.GetInputDirectionNormalized();
         Vector3 camForward = new Vector3(cameraPosition.forward.x, 0, cameraPosition.forward.z);
         Vector3 camRight = new Vector3(cameraPosition.right.x, 0, cameraPosition.right.z);
         Vector3 moveDirection = (inputDirection.z * camForward + inputDirection.x * camRight).normalized;

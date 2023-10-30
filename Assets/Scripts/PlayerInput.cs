@@ -19,37 +19,48 @@ public class PlayerInput : MonoBehaviour {
     }
     
     private void Update() {
-        InteractableSelectionPosBased(playerPosition);   
+        InteractableSelectionPosBased(playerPosition);
     }
 
     private void Interact_called(UnityEngine.InputSystem.InputAction.CallbackContext context) {
         if (OnInteraction != null) OnInteraction(this, EventArgs.Empty);
     }
 
-    // TODO: Separate the visuals from selection logic
     private void InteractableSelectionPosBased(Transform interactionTransform) {
         float interactionDistance = 2f;
-        bool inInteractRegion = Physics.Raycast(interactionTransform.position, interactionTransform.forward, out RaycastHit interactionObject, interactionDistance);
+        bool interactionWithinReach = Physics.Raycast(interactionTransform.position, interactionTransform.forward, out RaycastHit interactionObject, interactionDistance);
+        Transform interactableTransform = interactionWithinReach ? interactionObject.transform : null;
 
-        // Check if the object is within reach and is interactable
-        if (inInteractRegion && interactionObject.transform.TryGetComponent(out IInteractable interactable) && interactionObject.transform.TryGetComponent(out InteractableSelectionVisual interactableVisual)) {
-            selectedInteractable = interactable;
-            selectedInteractableVisual?.Notify(selectedInteractable);
-            selectedInteractableVisual = interactableVisual;
-        } else {
+        SelectInteractable(interactableTransform);
+        SelectInteractableVisual(interactableTransform);
+    }
+
+    private void SelectInteractable(Transform interactionTransform) {
+        if (interactionTransform == null) {
             selectedInteractable = null;
-            selectedInteractableVisual?.Notify(selectedInteractable);
-            selectedInteractableVisual = null;
+            return;
         }
+        interactionTransform.TryGetComponent(out IInteractable interactable);
+        selectedInteractable = interactable;
+    }
+
+    private void SelectInteractableVisual(Transform interactionTransform) {
+        selectedInteractableVisual?.Notify(selectedInteractable);
+        if (interactionTransform == null) {
+            selectedInteractableVisual = null;
+            return;
+        }
+        interactionTransform.TryGetComponent(out InteractableSelectionVisual interactableVisual);
+        selectedInteractableVisual = interactableVisual;
         selectedInteractableVisual?.Notify(selectedInteractable);
     }
 
-    public Vector3 getInputDirectionNormalized() {
+    public Vector3 GetInputDirectionNormalized() {
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
         return new Vector3(inputVector.x, 0, inputVector.y).normalized;
     }
 
-    public IInteractable getSelectedInteractable() {
+    public IInteractable GetSelectedInteractable() {
         return selectedInteractable;
     }
 }
