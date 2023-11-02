@@ -19,8 +19,8 @@ public class InteractableSelectionVisual : MonoBehaviour {
     private void Hide() {
         selectedVisual.SetActive(false);
     }
-    public void Notify(IInteractable selectedInteractable) {
-        if (selectedInteractable == interactable) {
+    public void Notify() {
+        if (PlayerInput.selectedInteractable == interactable) {
             Show();
         } else {
             Hide();

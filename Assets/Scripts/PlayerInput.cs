@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour {
     private PlayerInputActions playerInputActions;
-    // TODO: Think how to get rid off player reference
+    // TODO (Optional): Think how to get rid of player reference
     [SerializeField] private Transform playerPosition;
 
-    private IInteractable selectedInteractable;
+    // TODO (Optional): Think how to get rid of singelton pattern usage, is it applicable ?
+    public static IInteractable selectedInteractable { get; private set; }
     private InteractableSelectionVisual selectedInteractableVisual;
     public event EventHandler OnInteraction;
     
@@ -49,21 +50,17 @@ public class PlayerInput : MonoBehaviour {
      * In case the selected interactable has changed, both new and previous visuals get notification
      */
     private void SelectInteractableVisual(Transform interactionTransform) {
-        selectedInteractableVisual?.Notify(selectedInteractable);
+        selectedInteractableVisual?.Notify();
         if (interactionTransform == null || !interactionTransform.TryGetComponent(out InteractableSelectionVisual interactableVisual)) {
             selectedInteractableVisual = null;
         } else {
             selectedInteractableVisual = interactableVisual;
-            selectedInteractableVisual.Notify(selectedInteractable);
+            selectedInteractableVisual.Notify();
         }
     }
 
     public Vector3 GetInputDirectionNormalized() {
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
         return new Vector3(inputVector.x, 0, inputVector.y).normalized;
-    }
-
-    public IInteractable GetSelectedInteractable() {
-        return selectedInteractable;
     }
 }

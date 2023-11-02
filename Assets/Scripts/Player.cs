@@ -29,7 +29,7 @@ public class Player : MonoBehaviour {
     }
 
     private void InteractionHandler (object sender, EventArgs args) {
-        IInteractable selectedInteractable = input.GetSelectedInteractable();
+        IInteractable selectedInteractable = PlayerInput.selectedInteractable;
 
         if (selectedInteractable != null) {
             selectedInteractable.Interact(transform);
