@@ -37,11 +37,11 @@ public class PlayerInput : MonoBehaviour {
         SelectInteractableVisual(interactableTransform);
     }
 
-    private void SelectInteractable(Transform interactionTransform) {
-        if (interactionTransform == null) {
+    private void SelectInteractable(Transform interactableTransform) {
+        if (interactableTransform == null) {
             selectedInteractable = null;
         } else {
-            interactionTransform.TryGetComponent(out IInteractable interactable);
+            interactableTransform.TryGetComponent(out IInteractable interactable);
             selectedInteractable = interactable;
         }
     }
@@ -49,9 +49,9 @@ public class PlayerInput : MonoBehaviour {
     /* Updates the reference to the selected interactable's visual and notifies it
      * In case the selected interactable has changed, both new and previous visuals get notification
      */
-    private void SelectInteractableVisual(Transform interactionTransform) {
+    private void SelectInteractableVisual(Transform interactableTransform) {
         selectedInteractableVisual?.Notify();
-        if (interactionTransform == null || !interactionTransform.TryGetComponent(out InteractableSelectionVisual interactableVisual)) {
+        if (interactableTransform == null || !interactableTransform.TryGetComponent(out InteractableSelectionVisual interactableVisual)) {
             selectedInteractableVisual = null;
         } else {
             selectedInteractableVisual = interactableVisual;
