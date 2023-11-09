@@ -8,7 +8,6 @@ public class PlayerInput : MonoBehaviour {
     // TODO (Optional): Think how to get rid of player reference
     [SerializeField] private Transform playerPosition;
 
-    // TODO (Optional): Think how to get rid of singelton pattern usage, is it applicable ?
     public static IInteractable selectedInteractable { get; private set; }
     private InteractableSelectionVisual selectedInteractableVisual;
     public event EventHandler OnInteraction;

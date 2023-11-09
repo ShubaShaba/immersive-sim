@@ -38,7 +38,7 @@ public class Player : MonoBehaviour {
 
     private void MovementHandler() {
         float playerHeight = 2f;
-        float playerRadius = .7f;
+        float playerRadius = .55f;
         float moveDistance = moveSpeed * Time.deltaTime;
 
         // Calculating the direction of movement relative to the camera
