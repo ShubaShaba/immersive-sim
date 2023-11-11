@@ -11,6 +11,8 @@ public class TankStorage : MonoBehaviour, IInteractable {
         if (tank == null) {
             Transform tankTransform = Instantiate(tankSO.Prefab, mountingPoint);
             tankTransform.GetComponent<Tank>().SetStorage(this);
+        } else {
+            tank.EjectFromStorage();
         }
     }
     string IInteractable.getInteractHint() {

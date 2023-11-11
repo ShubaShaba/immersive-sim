@@ -20,6 +20,12 @@ public class Tank : MonoBehaviour {
         transform.localPosition = Vector3.zero;
     }
 
+    public void EjectFromStorage () {
+        storage?.EjectTank();
+        storage = null; 
+        transform.parent = null;
+    }
+
     public TankStorage returnTankStorage() {
         return storage;
     }
