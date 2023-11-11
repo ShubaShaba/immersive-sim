@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour, ItemCarrier{
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float turnSmoothVelocity;
 
     [SerializeField] private Transform cameraPosition;
     [SerializeField] private PlayerInput input;
+    [SerializeField] private Transform mountingPoint;
+    private CarryableItem carryableItem;
+
 
     /*
     TODO: 
@@ -56,5 +59,21 @@ public class Player : MonoBehaviour {
             transform.eulerAngles = Vector3.up * smoothedAngle;
             transform.position += Convert.ToInt16(canMove) * moveDirection * moveDistance;
         }
+    }
+
+    public Transform GetMountingPoint() {
+        return mountingPoint;
+    }
+
+    public void Inject(CarryableItem item) {
+        carryableItem = item;
+    }
+
+    public void Eject() {
+        carryableItem = null;
+    }
+
+    public bool IsEmpty() {
+        return carryableItem == null;
     }
 }

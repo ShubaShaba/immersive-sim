@@ -7,12 +7,13 @@ public class TankStorage : MonoBehaviour, IInteractable, ItemCarrier {
     [SerializeField] private Transform mountingPoint;
     private Tank tank;
 
+    // TODO: Refactor interactor to be of type Player (since player is the only expected interactor)
     void IInteractable.Interact(Transform interactor) {
         if (tank == null) {
             Transform tankTransform = Instantiate(tankSO.Prefab, mountingPoint);
             tankTransform.GetComponent<Tank>().SetParent(this);
         } else {
-            tank.RemoveParent();
+            tank.SetParent(interactor.GetComponent<Player>()); 
         }
     }
     string IInteractable.getInteractHint() {
