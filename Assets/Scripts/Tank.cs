@@ -2,31 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tank : MonoBehaviour {
+public class Tank : MonoBehaviour, CarryableItem {
     [SerializeField] private ItemSO tankSO;
-    private TankStorage storage;
+    private ItemCarrier carrier;
 
     public ItemSO getTankSO() {
         return tankSO;
     }
 
-    public void SetStorage(TankStorage storage) {
-        if (!storage.isEmpty()) return;
-        this.storage?.EjectTank();
+    public void SetParent(ItemCarrier carrier) {
+        if (!carrier.IsEmpty()) return;
+        this.carrier?.Eject();
 
-        this.storage = storage;
-        storage.InjectTank(this);
-        transform.parent = storage.GetMountingPoint();
+        this.carrier = carrier;
+        carrier.Inject(this);
+        transform.parent = carrier.GetMountingPoint();
         transform.localPosition = Vector3.zero;
     }
 
-    public void EjectFromStorage () {
-        storage?.EjectTank();
-        storage = null; 
+    public void RemoveParent() {
+        carrier?.Eject();
+        carrier = null; 
         transform.parent = null;
     }
 
-    public TankStorage returnTankStorage() {
-        return storage;
+    public ItemCarrier ReturnParent() {
+         return carrier;
     }
 }

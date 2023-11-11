@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankStorage : MonoBehaviour, IInteractable {
+public class TankStorage : MonoBehaviour, IInteractable, ItemCarrier {
     [SerializeField] private ItemSO tankSO;
     [SerializeField] private Transform mountingPoint;
     private Tank tank;
@@ -10,9 +10,9 @@ public class TankStorage : MonoBehaviour, IInteractable {
     void IInteractable.Interact(Transform interactor) {
         if (tank == null) {
             Transform tankTransform = Instantiate(tankSO.Prefab, mountingPoint);
-            tankTransform.GetComponent<Tank>().SetStorage(this);
+            tankTransform.GetComponent<Tank>().SetParent(this);
         } else {
-            tank.EjectFromStorage();
+            tank.RemoveParent();
         }
     }
     string IInteractable.getInteractHint() {
@@ -23,15 +23,15 @@ public class TankStorage : MonoBehaviour, IInteractable {
         return mountingPoint;
     }
 
-    public void InjectTank(Tank tank) {
-        this.tank = tank;
+    public void Inject(CarryableItem item) {
+        tank = (Tank) item;
     }
 
-    public void EjectTank() {
+    public void Eject() {
         tank = null;
     }
 
-    public bool isEmpty() {
+    public bool IsEmpty() {
         return tank == null;
     }
 }
