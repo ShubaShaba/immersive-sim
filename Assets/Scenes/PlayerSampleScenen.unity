@@ -848,6 +848,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1001 &755780079
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1825231004317493378, guid: 4243fbf4e53ea14448f4d38a4b5b056f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.8708496
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825231004317493378, guid: 4243fbf4e53ea14448f4d38a4b5b056f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825231004317493378, guid: 4243fbf4e53ea14448f4d38a4b5b056f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.8741026
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825231004317493378, guid: 4243fbf4e53ea14448f4d38a4b5b056f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825231004317493378, guid: 4243fbf4e53ea14448f4d38a4b5b056f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825231004317493378, guid: 4243fbf4e53ea14448f4d38a4b5b056f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825231004317493378, guid: 4243fbf4e53ea14448f4d38a4b5b056f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825231004317493378, guid: 4243fbf4e53ea14448f4d38a4b5b056f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825231004317493378, guid: 4243fbf4e53ea14448f4d38a4b5b056f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 1825231004317493378, guid: 4243fbf4e53ea14448f4d38a4b5b056f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4046524213093844052, guid: 4243fbf4e53ea14448f4d38a4b5b056f, type: 3}
+      propertyPath: m_Name
+      value: TankFillInStation
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4243fbf4e53ea14448f4d38a4b5b056f, type: 3}
 --- !u!1 &930025985
 GameObject:
   m_ObjectHideFlags: 0
@@ -1775,3 +1832,4 @@ SceneRoots:
   - {fileID: 1937832753}
   - {fileID: 143650787}
   - {fileID: 696945241}
+  - {fileID: 755780079}
