@@ -8,13 +8,13 @@ using UnityEngine;
 */
 public class Tank : MonoBehaviour, CarryableItem {
     [SerializeField] private ItemSO tankSO;
-    private ItemCarrier carrier;
+    private IItemCarrier carrier;
 
     public ItemSO getTankSO() {
         return tankSO;
     }
 
-    public void SetParent(ItemCarrier carrier) {
+    public void SetParent(IItemCarrier carrier) {
         if (!carrier.IsEmpty()) return;
         this.carrier?.Eject();
 
@@ -30,7 +30,7 @@ public class Tank : MonoBehaviour, CarryableItem {
         transform.parent = null;
     }
 
-    public ItemCarrier ReturnParent() {
+    public IItemCarrier ReturnParent() {
          return carrier;
     }
 }

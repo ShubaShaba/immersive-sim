@@ -6,9 +6,9 @@ public class TankStorage : MonoBehaviour, IInteractable {
     [SerializeField] private ItemSO tankSO;
 
     void IInteractable.Interact(Transform interactor) {
-        if (interactor.GetComponent<ItemCarrier>().IsEmpty()) {
+        if (interactor.GetComponent<IItemCarrier>().IsEmpty()) {
             Transform tankTransform = Instantiate(tankSO.Prefab);
-            tankTransform.GetComponent<Tank>().SetParent(interactor.GetComponent<ItemCarrier>());
+            tankTransform.GetComponent<Tank>().SetParent(interactor.GetComponent<IItemCarrier>());
         }
     }
 

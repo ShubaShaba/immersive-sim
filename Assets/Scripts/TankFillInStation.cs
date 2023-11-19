@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankFillInStation : MonoBehaviour, IInteractable, ItemCarrier {
+public class TankFillInStation : MonoBehaviour, IInteractable, IItemCarrier {
     // TODO: Create a base class for item carriers and carriable items (possibly)
     [SerializeField] private Transform mountingPoint;
     private Tank tank;
     
     void IInteractable.Interact(Transform interactor) {
-        ItemCarrier carrier = null;
+        IItemCarrier carrier = null;
         interactor.TryGetComponent(out carrier);
         if (carrier == null) return;
 

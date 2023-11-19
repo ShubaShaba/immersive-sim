@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, ItemCarrier {
+public class Player : MonoBehaviour, IItemCarrier {
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float turnSmoothVelocity;
 
