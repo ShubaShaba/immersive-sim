@@ -4,7 +4,8 @@ using UnityEngine;
 
 public interface ItemCarrier {
     Transform GetMountingPoint();
-    void Inject(CarryableItem item);
+    bool Inject(CarryableItem item);
     void Eject();
     bool IsEmpty();
+    CarryableItem GetItem();
 }

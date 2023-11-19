@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour, ItemCarrier{
+public class Player : MonoBehaviour, ItemCarrier {
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float turnSmoothVelocity;
 
@@ -11,7 +11,6 @@ public class Player : MonoBehaviour, ItemCarrier{
     [SerializeField] private PlayerInput input;
     [SerializeField] private Transform mountingPoint;
     private CarryableItem carryableItem;
-
 
     /*
     TODO: 
@@ -65,8 +64,9 @@ public class Player : MonoBehaviour, ItemCarrier{
         return mountingPoint;
     }
 
-    public void Inject(CarryableItem item) {
+    public bool Inject(CarryableItem item) {
         carryableItem = item;
+        return true;
     }
 
     public void Eject() {
@@ -75,5 +75,9 @@ public class Player : MonoBehaviour, ItemCarrier{
 
     public bool IsEmpty() {
         return carryableItem == null;
+    }
+
+    public CarryableItem GetItem() {
+       return carryableItem; 
     }
 }

@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TankFillInStation : MonoBehaviour, IInteractable, ItemCarrier {
-    // TODO: Create a base class for item carriers and carriable items
+    // TODO: Create a base class for item carriers and carriable items (possibly)
     [SerializeField] private Transform mountingPoint;
     private Tank tank;
     
     void IInteractable.Interact(Transform interactor) {
-        
+        ItemCarrier carrier = null;
+        interactor.TryGetComponent(out carrier);
+        if (carrier == null) return;
+
+        if (IsEmpty() && !carrier.IsEmpty()) {
+            carrier.GetItem().SetParent(this);
+        } else if(!IsEmpty() && carrier.IsEmpty()) {
+            tank.SetParent(carrier);
+        }
     }
+
     string IInteractable.getInteractHint() {
         return "Fill in the tank";
     }
@@ -18,8 +27,10 @@ public class TankFillInStation : MonoBehaviour, IInteractable, ItemCarrier {
         return mountingPoint;
     }
 
-    public void Inject(CarryableItem item) {
-        tank = (Tank) item;
+    public bool Inject(CarryableItem item) {
+        bool isTank = item is Tank;
+        if (isTank && IsEmpty()) tank = (Tank) item;
+        return isTank;
     }
 
     public void Eject() {
@@ -28,5 +39,9 @@ public class TankFillInStation : MonoBehaviour, IInteractable, ItemCarrier {
 
     public bool IsEmpty() {
         return tank == null;
+    }
+
+    public CarryableItem GetItem() {
+        return tank;
     }
 }

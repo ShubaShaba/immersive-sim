@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankStorage : MonoBehaviour, IInteractable{
+public class TankStorage : MonoBehaviour, IInteractable {
     [SerializeField] private ItemSO tankSO;
 
     void IInteractable.Interact(Transform interactor) {
@@ -11,6 +11,7 @@ public class TankStorage : MonoBehaviour, IInteractable{
             tankTransform.GetComponent<Tank>().SetParent(interactor.GetComponent<ItemCarrier>());
         }
     }
+
     string IInteractable.getInteractHint() {
         return "Get a tank (empty)";
     }

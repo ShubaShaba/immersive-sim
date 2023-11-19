@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/* 
+    TODO: base carrieable object class
+    Need to include Inject() method returns false*
+*/
 public class Tank : MonoBehaviour, CarryableItem {
     [SerializeField] private ItemSO tankSO;
     private ItemCarrier carrier;
