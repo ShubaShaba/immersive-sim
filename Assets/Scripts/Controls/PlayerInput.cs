@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 using UnityEngine;
 
 public class PlayerInput : MonoBehaviour {
@@ -11,19 +12,26 @@ public class PlayerInput : MonoBehaviour {
     public static IInteractable selectedInteractable { get; private set; }
     private InteractableSelectionVisual selectedInteractableVisual;
     public event EventHandler OnInteraction;
+    public event EventHandler OnAim;
     
     private void Awake() {
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player.Enable();
         playerInputActions.Player.Interact.performed += Interact_called;
+        playerInputActions.Player.Aim.performed += Aim_called;
     }
     
     private void Update() {
         InteractableSelectionPosBased(playerPosition);
     }
 
-    private void Interact_called(UnityEngine.InputSystem.InputAction.CallbackContext context) {
+    private void Interact_called(InputAction.CallbackContext context) {
         if (OnInteraction != null) OnInteraction(this, EventArgs.Empty);
+    }
+
+    // TODO: Try within CameraController.cs
+    private void Aim_called(InputAction.CallbackContext context) {
+        if (OnAim != null) OnAim(this, EventArgs.Empty);
     }
 
     // Selects an interactable object based on current Player's position

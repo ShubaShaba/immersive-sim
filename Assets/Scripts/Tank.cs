@@ -6,7 +6,7 @@ using UnityEngine;
     TODO: base carrieable object class
     Need to include Inject() method returns false*
 */
-public class Tank : MonoBehaviour, CarryableItem {
+public class Tank : MonoBehaviour, ICarryableItem {
     [SerializeField] private ItemSO tankSO;
     private IItemCarrier carrier;
 

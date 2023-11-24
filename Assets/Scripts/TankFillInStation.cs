@@ -27,7 +27,7 @@ public class TankFillInStation : MonoBehaviour, IInteractable, IItemCarrier {
         return mountingPoint;
     }
 
-    public bool Inject(CarryableItem item) {
+    public bool Inject(ICarryableItem item) {
         bool isTank = item is Tank;
         if (isTank && IsEmpty()) tank = (Tank) item;
         return isTank;
@@ -41,7 +41,7 @@ public class TankFillInStation : MonoBehaviour, IInteractable, IItemCarrier {
         return tank == null;
     }
 
-    public CarryableItem GetItem() {
+    public ICarryableItem GetItem() {
         return tank;
     }
 }

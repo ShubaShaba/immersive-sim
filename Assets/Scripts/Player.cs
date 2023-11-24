@@ -10,7 +10,7 @@ public class Player : MonoBehaviour, IItemCarrier {
     [SerializeField] private Transform cameraPosition;
     [SerializeField] private PlayerInput input;
     [SerializeField] private Transform mountingPoint;
-    private CarryableItem carryableItem;
+    private ICarryableItem carryableItem;
 
     /*
     TODO: 
@@ -64,7 +64,7 @@ public class Player : MonoBehaviour, IItemCarrier {
         return mountingPoint;
     }
 
-    public bool Inject(CarryableItem item) {
+    public bool Inject(ICarryableItem item) {
         carryableItem = item;
         return true;
     }
@@ -77,7 +77,7 @@ public class Player : MonoBehaviour, IItemCarrier {
         return carryableItem == null;
     }
 
-    public CarryableItem GetItem() {
+    public ICarryableItem GetItem() {
        return carryableItem; 
     }
 }
