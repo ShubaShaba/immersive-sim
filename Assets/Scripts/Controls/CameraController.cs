@@ -1,28 +1,20 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour {
-    [SerializeField] private InputActionReference input;
+    [SerializeField] private PlayerInput input;
     private Animator animator;
     private bool isThirdPersonCamera = true;
 
     private void Awake() {
         animator = GetComponent<Animator>();
     }
-    private void OnEnable() {
-        input.action.Enable();
-    }
-
-    private void OnDisable() {
-        input.action.Disable();
-    }
 
     private void Start() {
-        input.action.performed += SwitchMode;
+        input.GetPlayersActions().Aim.performed += SwitchMode;
     }
 
     private void SwitchMode(InputAction.CallbackContext context) {

@@ -23,7 +23,7 @@ public class Player : MonoBehaviour, IItemCarrier {
 
     private void Start() {
         // Subscribing to the publisher (player input sysytem)
-        input.GetPlayersActions().Interact.performed += InteractionHandler;
+        input.GetPlayersActions().Interact.performed += InteractionHandler;   
     }
     private void Update() {
         MovementHandler();

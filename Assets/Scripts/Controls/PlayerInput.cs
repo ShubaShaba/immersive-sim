@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour {
     private PlayerInputActions playerInputActions;
-    // TODO (Optional): Think how to get rid of player reference
     [SerializeField] private Transform playerPosition;
     private InteractableSelectionVisual selectedInteractableVisual;
     public static IInteractable selectedInteractable { get; private set; }
