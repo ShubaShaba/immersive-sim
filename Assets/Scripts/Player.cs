@@ -23,13 +23,13 @@ public class Player : MonoBehaviour, IItemCarrier {
 
     private void Start() {
         // Subscribing to the publisher (player input sysytem)
-        input.OnInteraction += InteractionHandler;   
+        input.GetPlayersActions().Interact.performed += InteractionHandler;
     }
     private void Update() {
         MovementHandler();
     }
 
-    private void InteractionHandler (object sender, EventArgs args) {
+    private void InteractionHandler (UnityEngine.InputSystem.InputAction.CallbackContext context) {
         IInteractable selectedInteractable = PlayerInput.selectedInteractable;
 
         if (selectedInteractable != null) {

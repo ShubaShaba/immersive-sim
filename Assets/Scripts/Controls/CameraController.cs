@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour {
     [SerializeField] private InputActionReference input;
     private Animator animator;
-    private bool thirdPersonCamera = true;
+    private bool isThirdPersonCamera = true;
 
     private void Awake() {
         animator = GetComponent<Animator>();
@@ -25,11 +26,11 @@ public class CameraController : MonoBehaviour {
     }
 
     private void SwitchMode(InputAction.CallbackContext context) {
-        if (thirdPersonCamera) {
+        if (isThirdPersonCamera) {
             animator.Play("Aiming Camera");
         } else {
             animator.Play("Third Person Camera");
         }
-        thirdPersonCamera = !thirdPersonCamera;
+        isThirdPersonCamera = !isThirdPersonCamera;
     }
 }

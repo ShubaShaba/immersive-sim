@@ -8,30 +8,18 @@ public class PlayerInput : MonoBehaviour {
     private PlayerInputActions playerInputActions;
     // TODO (Optional): Think how to get rid of player reference
     [SerializeField] private Transform playerPosition;
-
-    public static IInteractable selectedInteractable { get; private set; }
     private InteractableSelectionVisual selectedInteractableVisual;
-    public event EventHandler OnInteraction;
-    public event EventHandler OnAim;
-    
+    public static IInteractable selectedInteractable { get; private set; }
+    private PlayerInputActions.PlayerActions playersActions;
+
     private void Awake() {
         playerInputActions = new PlayerInputActions();
+        playersActions = playerInputActions.Player;
         playerInputActions.Player.Enable();
-        playerInputActions.Player.Interact.performed += Interact_called;
-        playerInputActions.Player.Aim.performed += Aim_called;
     }
     
     private void Update() {
         InteractableSelectionPosBased(playerPosition);
-    }
-
-    private void Interact_called(InputAction.CallbackContext context) {
-        if (OnInteraction != null) OnInteraction(this, EventArgs.Empty);
-    }
-
-    // TODO: Try within CameraController.cs
-    private void Aim_called(InputAction.CallbackContext context) {
-        if (OnAim != null) OnAim(this, EventArgs.Empty);
     }
 
     // Selects an interactable object based on current Player's position
@@ -69,5 +57,9 @@ public class PlayerInput : MonoBehaviour {
     public Vector3 GetInputDirectionNormalized() {
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
         return new Vector3(inputVector.x, 0, inputVector.y).normalized;
+    }
+
+    public PlayerInputActions.PlayerActions GetPlayersActions() {
+        return playersActions; 
     }
 }
