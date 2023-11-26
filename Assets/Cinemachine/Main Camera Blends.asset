@@ -16,19 +16,19 @@ MonoBehaviour:
   - m_From: Third Person Camera
     m_To: Aiming Camera
     m_Blend:
-      m_Style: 1
-      m_Time: 1
+      m_Style: 4
+      m_Time: 0.25
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - m_From: Aiming Camera
-    m_To: Third Person Camera
+  - m_From: Third Person Camera
+    m_To: Aiming Camera
     m_Blend:
       m_Style: 5
-      m_Time: 1
+      m_Time: 0.25
       m_CustomCurve:
         serializedVersion: 2
         m_Curve: []

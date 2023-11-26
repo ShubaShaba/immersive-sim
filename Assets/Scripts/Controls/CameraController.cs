@@ -2,21 +2,29 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraController : MonoBehaviour {
-    [SerializeField] private PlayerInput input;
+    [SerializeField] private InputActionReference input;
     private Animator animator;
     private bool thirdPersonCamera = true;
 
     private void Awake() {
         animator = GetComponent<Animator>();
     }
-
-    private void Start() {
-        input.OnAim += SwitchMode; 
+    private void OnEnable() {
+        input.action.Enable();
     }
 
-    private void SwitchMode(object sender, EventArgs args) {
+    private void OnDisable() {
+        input.action.Disable();
+    }
+
+    private void Start() {
+        input.action.performed += SwitchMode;
+    }
+
+    private void SwitchMode(InputAction.CallbackContext context) {
         if (thirdPersonCamera) {
             animator.Play("Aiming Camera");
         } else {
