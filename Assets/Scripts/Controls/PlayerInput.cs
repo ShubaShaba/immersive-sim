@@ -7,6 +7,7 @@ using UnityEngine;
 public class PlayerInput : MonoBehaviour {
     private PlayerInputActions playerInputActions;
     [SerializeField] private Transform playerPosition;
+    [SerializeField] private Transform cursorPosition;
     private InteractableSelectionVisual selectedInteractableVisual;
     public static IInteractable selectedInteractable { get; private set; }
     private PlayerInputActions.PlayerActions playersActions;
@@ -60,5 +61,9 @@ public class PlayerInput : MonoBehaviour {
 
     public PlayerInputActions.PlayerActions GetPlayersActions() {
         return playersActions; 
+    }
+
+    public Vector3 GetCursorPosition() {
+        return cursorPosition.position;
     }
 }

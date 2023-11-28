@@ -2,15 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, IItemCarrier {
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float turnSmoothVelocity;
-
     [SerializeField] private Transform cameraPosition;
     [SerializeField] private PlayerInput input;
     [SerializeField] private Transform mountingPoint;
     private ICarryableItem carryableItem;
+    private bool isAiming;
 
     /*
     TODO: 
@@ -22,14 +23,16 @@ public class Player : MonoBehaviour, IItemCarrier {
      */
 
     private void Start() {
+        isAiming = false;
         // Subscribing to the publisher (player input sysytem)
-        input.GetPlayersActions().Interact.performed += InteractionHandler;   
+        input.GetPlayersActions().Interact.performed += InteractionHandler;
+        input.GetPlayersActions().Aim.performed += AimingHandler;   
     }
     private void Update() {
         MovementHandler();
     }
 
-    private void InteractionHandler (UnityEngine.InputSystem.InputAction.CallbackContext context) {
+    private void InteractionHandler(InputAction.CallbackContext context) {
         IInteractable selectedInteractable = PlayerInput.selectedInteractable;
 
         if (selectedInteractable != null) {
@@ -38,24 +41,41 @@ public class Player : MonoBehaviour, IItemCarrier {
         }
     }
 
+    private void AimingHandler(InputAction.CallbackContext context) {
+        isAiming = !isAiming;
+    }
+
+    private void RotationHandler(Vector3 moveDirection) {
+        Vector3 direction = moveDirection;
+        float rotationalTime = 0.1f;
+        if (isAiming) {
+            direction = input.GetCursorPosition() - transform.position;
+            rotationalTime = 0.05f;
+        }
+        
+        float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
+        if (moveDirection.magnitude != 0 || isAiming){
+            transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, rotationalTime);
+        }
+    }
+
     private void MovementHandler() {
         float playerHeight = 2f;
         float playerRadius = .55f;
         float moveDistance = moveSpeed * Time.deltaTime;
 
+    
         // Calculating the direction of movement relative to the camera
         Vector3 inputDirection = input.GetInputDirectionNormalized();
         Vector3 camForward = new Vector3(cameraPosition.forward.x, 0, cameraPosition.forward.z);
         Vector3 camRight = new Vector3(cameraPosition.right.x, 0, cameraPosition.right.z);
         Vector3 moveDirection = (inputDirection.z * camForward + inputDirection.x * camRight).normalized;
 
-        float targetAngle = Mathf.Atan2(moveDirection.x, moveDirection.z) * Mathf.Rad2Deg;
-        float smoothedAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, 0.1f);
         bool canMove = !Physics.CapsuleCast(
             transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirection, moveDistance);
-
+        
+        RotationHandler(moveDirection);
         if (moveDirection.magnitude != 0) {
-            transform.eulerAngles = Vector3.up * smoothedAngle;
             transform.position += Convert.ToInt16(canMove) * moveDirection * moveDistance;
         }
     }
