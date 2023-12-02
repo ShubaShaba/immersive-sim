@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class MouseWorldPosition : MonoBehaviour {
-    [SerializeField] private PlayerInput input;
     [SerializeField] private Camera aimingCamera;
 
     private void Update () {
