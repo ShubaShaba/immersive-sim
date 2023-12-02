@@ -26,10 +26,16 @@ public class Player : MonoBehaviour, IItemCarrier {
         isAiming = false;
         // Subscribing to the publisher (player input sysytem)
         input.GetPlayersActions().Interact.performed += InteractionHandler;
-        input.GetPlayersActions().Aim.performed += AimingHandler;   
+        input.GetPlayersActions().Aim.performed += AimingHandler;
+        input.GetPlayersActions().Shoot.performed += ShootingHandler;
     }
     private void Update() {
         MovementHandler();
+    }
+
+    // TODO: Create a separate point for shooting:
+    private void ShootingHandler(InputAction.CallbackContext context) {
+        RayCastShoot.Shoot(mountingPoint.position, transform.forward);
     }
 
     private void InteractionHandler(InputAction.CallbackContext context) {
