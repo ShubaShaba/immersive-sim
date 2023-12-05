@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankFillInStation : MonoBehaviour, IInteractable, IItemCarrier {
+public class TankFillInStation : MonoBehaviour, IInteractable, IItemCarrier, ShootingTarget {
     // TODO: Create a base class for item carriers and carriable items (possibly)
     [SerializeField] private Transform mountingPoint;
     private Tank tank;
@@ -43,5 +43,9 @@ public class TankFillInStation : MonoBehaviour, IInteractable, IItemCarrier {
 
     public ICarryableItem GetItem() {
         return tank;
+    }
+
+    void ShootingTarget.OnHit() {
+        Debug.Log(gameObject);
     }
 }

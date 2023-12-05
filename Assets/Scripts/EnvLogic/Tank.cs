@@ -6,7 +6,7 @@ using UnityEngine;
     TODO: base carrieable object class
     Need to include Inject() method returns false*
 */
-public class Tank : MonoBehaviour, ICarryableItem {
+public class Tank : MonoBehaviour, ICarryableItem, ShootingTarget {
     [SerializeField] private ItemSO tankSO;
     private IItemCarrier carrier;
 
@@ -32,5 +32,9 @@ public class Tank : MonoBehaviour, ICarryableItem {
 
     public IItemCarrier ReturnParent() {
          return carrier;
+    }
+    
+    void ShootingTarget.OnHit() {
+        Debug.Log(gameObject);
     }
 }

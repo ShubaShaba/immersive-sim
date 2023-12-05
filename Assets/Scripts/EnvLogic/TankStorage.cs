@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankStorage : MonoBehaviour, IInteractable {
+public class TankStorage : MonoBehaviour, IInteractable, ShootingTarget {
     [SerializeField] private ItemSO tankSO;
 
     void IInteractable.Interact(Transform interactor) {
@@ -14,5 +14,9 @@ public class TankStorage : MonoBehaviour, IInteractable {
 
     string IInteractable.getInteractHint() {
         return "Get a tank (empty)";
+    }
+
+    void ShootingTarget.OnHit() {
+        Debug.Log(gameObject);
     }
 }

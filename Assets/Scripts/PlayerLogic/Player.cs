@@ -35,7 +35,9 @@ public class Player : MonoBehaviour, IItemCarrier {
 
     // TODO: Create a separate point for shooting:
     private void ShootingHandler(InputAction.CallbackContext context) {
-        RayCastShoot.Shoot(mountingPoint.position, transform.forward);
+        if (isAiming) {
+            RayCastShoot.Shoot(mountingPoint.position, transform.forward);
+        }
     }
 
     private void InteractionHandler(InputAction.CallbackContext context) {
