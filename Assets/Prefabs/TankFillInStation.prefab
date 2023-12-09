@@ -222,6 +222,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TankFillInStation
       objectReference: {fileID: 0}
+    - target: {fileID: 3944929084127337268, guid: 352bfa9cea7094a4da3f9b4c7ff0ffef, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8045666334922218353, guid: 352bfa9cea7094a4da3f9b4c7ff0ffef, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1

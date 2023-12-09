@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: -5741517139637723331}
   - component: {fileID: -2813510515209575243}
   - component: {fileID: 1646976527274433985}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TankStorage
   m_TagString: Untagged
   m_Icon: {fileID: 0}

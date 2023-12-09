@@ -6,7 +6,9 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour, IItemCarrier {
     [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private float turnSmoothVelocity;
+    [SerializeField] private float playerHeight = 2f;
+    [SerializeField] private float playerRadius = .55f;
+    private float turnSmoothVelocity;
     [SerializeField] private Transform cameraPosition;
     [SerializeField] private PlayerInput input;
     [SerializeField] private Transform mountingPoint;
@@ -68,10 +70,7 @@ public class Player : MonoBehaviour, IItemCarrier {
     }
 
     private void MovementHandler() {
-        float playerHeight = 2f;
-        float playerRadius = .55f;
         float moveDistance = moveSpeed * Time.deltaTime;
-
     
         // Calculating the direction of movement relative to the camera
         Vector3 inputDirection = input.GetInputDirectionNormalized();
@@ -79,8 +78,9 @@ public class Player : MonoBehaviour, IItemCarrier {
         Vector3 camRight = new Vector3(cameraPosition.right.x, 0, cameraPosition.right.z);
         Vector3 moveDirection = (inputDirection.z * camForward + inputDirection.x * camRight).normalized;
 
+        int obstaclesLayerMask = LayerMask.GetMask("Obstacles");
         bool canMove = !Physics.CapsuleCast(
-            transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirection, moveDistance);
+            transform.position, transform.position + Vector3.up * playerHeight, playerRadius, moveDirection, moveDistance, obstaclesLayerMask);
         
         RotationHandler(moveDirection);
         if (moveDirection.magnitude != 0) {
