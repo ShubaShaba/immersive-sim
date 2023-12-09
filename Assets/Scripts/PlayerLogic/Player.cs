@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, IItemCarrier {
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float playerHeight = 2f;
     [SerializeField] private float playerRadius = .55f;
+    [SerializeField] private float throwStrength = 3f;
     private float turnSmoothVelocity;
     [SerializeField] private Transform cameraPosition;
     [SerializeField] private PlayerInput input;
@@ -37,9 +38,11 @@ public class Player : MonoBehaviour, IItemCarrier {
 
     // TODO: Create a separate point for shooting:
     private void ShootingHandler(InputAction.CallbackContext context) {
-        if (isAiming) {
+        if (isAiming && !IsEmpty()) {
+            Throw();
+        } else if (isAiming) {
             RayCastShoot.Shoot(mountingPoint.position, transform.forward);
-        }
+        } 
     }
 
     private void InteractionHandler(InputAction.CallbackContext context) {
@@ -99,6 +102,12 @@ public class Player : MonoBehaviour, IItemCarrier {
 
     public void Eject() {
         carryableItem = null;
+    }
+
+    private void Throw() {
+        IThrowable throwable = carryableItem as IThrowable;
+        carryableItem.RemoveCarrier();
+        throwable?.Throw(transform.forward * throwStrength);        
     }
 
     public bool IsEmpty() {

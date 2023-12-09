@@ -13,9 +13,9 @@ public class TankFillInStation : MonoBehaviour, IInteractable, IItemCarrier, Sho
         if (carrier == null) return;
 
         if (IsEmpty() && !carrier.IsEmpty()) {
-            carrier.GetItem().SetParent(this);
+            carrier.GetItem().SetCarrier(this);
         } else if(!IsEmpty() && carrier.IsEmpty()) {
-            tank.SetParent(carrier);
+            tank.SetCarrier(carrier);
         }
     }
 

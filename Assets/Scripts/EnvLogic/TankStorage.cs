@@ -8,7 +8,7 @@ public class TankStorage : MonoBehaviour, IInteractable, ShootingTarget {
     void IInteractable.Interact(Transform interactor) {
         if (interactor.GetComponent<IItemCarrier>().IsEmpty()) {
             Transform tankTransform = Instantiate(tankSO.Prefab);
-            tankTransform.GetComponent<Tank>().SetParent(interactor.GetComponent<IItemCarrier>());
+            tankTransform.GetComponent<Tank>().SetCarrier(interactor.GetComponent<IItemCarrier>());
         }
     }
 

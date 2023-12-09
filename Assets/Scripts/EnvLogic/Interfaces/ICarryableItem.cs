@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface ICarryableItem {
-    void SetParent(IItemCarrier carrier);
-    void RemoveParent();
-    IItemCarrier ReturnParent();
+    void SetCarrier(IItemCarrier carrier);
+    void RemoveCarrier();
+    IItemCarrier ReturnCarrier();
 }
