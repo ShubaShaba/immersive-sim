@@ -17,5 +17,8 @@ public interface IThrowable {
 
         throwable.AddForce(force, ForceMode.Impulse); 
     }
+    float GetMass() {
+        return GetRigidbody().mass;
+    }
     protected Rigidbody GetRigidbody();
 }

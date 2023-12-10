@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour {
     private PlayerInputActions playerInputActions;
-    [SerializeField] private Transform playerPosition;
+    [SerializeField] private Player player;
     [SerializeField] private Transform cursorPosition;
     private InteractableSelectionVisual selectedInteractableVisual;
     public static IInteractable selectedInteractable { get; private set; }
@@ -19,7 +19,7 @@ public class PlayerInput : MonoBehaviour {
     }
     
     private void Update() {
-        InteractableSelectionPosBased(playerPosition);
+        InteractableSelectionPosBased(player.transform);
     }
 
     // Selects an interactable object based on current Player's position
@@ -65,5 +65,9 @@ public class PlayerInput : MonoBehaviour {
 
     public Vector3 GetCursorPosition() {
         return cursorPosition.position;
+    }
+
+    public Player GetPlayer() {
+        return player;
     }
 }

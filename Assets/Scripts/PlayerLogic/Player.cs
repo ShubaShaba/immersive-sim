@@ -30,14 +30,14 @@ public class Player : MonoBehaviour, IItemCarrier {
         // Subscribing to the publisher (player input sysytem)
         input.GetPlayersActions().Interact.performed += InteractionHandler;
         input.GetPlayersActions().Aim.performed += AimingHandler;
-        input.GetPlayersActions().Shoot.performed += ShootingHandler;
+        input.GetPlayersActions().MainAction.performed += MainActionHandler;  
     }
     private void Update() {
         MovementHandler();
     }
 
     // TODO: Create a separate point for shooting:
-    private void ShootingHandler(InputAction.CallbackContext context) {
+    private void MainActionHandler(InputAction.CallbackContext context) {
         if (isAiming && !IsEmpty()) {
             Throw();
         } else if (isAiming) {
@@ -91,6 +91,20 @@ public class Player : MonoBehaviour, IItemCarrier {
         }
     }
 
+    private void Throw() {
+        IThrowable throwable = carryableItem as IThrowable;
+        carryableItem.RemoveCarrier();
+        throwable?.Throw(transform.forward * throwStrength);        
+    }
+
+    public (float, float, Vector3) GetThrowingObjectData() {
+        IThrowable throwable = carryableItem as IThrowable;
+        if (throwable != null) {
+            return (throwable.GetMass(), throwStrength, transform.forward);
+        }
+        return (0f, 0f, Vector3.zero);
+    }
+
     public Transform GetMountingPoint() {
         return mountingPoint;
     }
@@ -102,12 +116,6 @@ public class Player : MonoBehaviour, IItemCarrier {
 
     public void Eject() {
         carryableItem = null;
-    }
-
-    private void Throw() {
-        IThrowable throwable = carryableItem as IThrowable;
-        carryableItem.RemoveCarrier();
-        throwable?.Throw(transform.forward * throwStrength);        
     }
 
     public bool IsEmpty() {

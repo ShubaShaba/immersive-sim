@@ -55,7 +55,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Shoot"",
+                    ""name"": ""MainAction"",
                     ""type"": ""Button"",
                     ""id"": ""7c827926-36e0-4b38-b093-b7ecdd8f6d82"",
                     ""expectedControlType"": ""Button"",
@@ -149,7 +149,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Shoot"",
+                    ""action"": ""MainAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -163,7 +163,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
-        m_Player_Shoot = m_Player.FindAction("Shoot", throwIfNotFound: true);
+        m_Player_MainAction = m_Player.FindAction("MainAction", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -228,7 +228,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Aim;
-    private readonly InputAction m_Player_Shoot;
+    private readonly InputAction m_Player_MainAction;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -236,7 +236,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
-        public InputAction @Shoot => m_Wrapper.m_Player_Shoot;
+        public InputAction @MainAction => m_Wrapper.m_Player_MainAction;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -255,9 +255,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
-            @Shoot.started += instance.OnShoot;
-            @Shoot.performed += instance.OnShoot;
-            @Shoot.canceled += instance.OnShoot;
+            @MainAction.started += instance.OnMainAction;
+            @MainAction.performed += instance.OnMainAction;
+            @MainAction.canceled += instance.OnMainAction;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -271,9 +271,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
-            @Shoot.started -= instance.OnShoot;
-            @Shoot.performed -= instance.OnShoot;
-            @Shoot.canceled -= instance.OnShoot;
+            @MainAction.started -= instance.OnMainAction;
+            @MainAction.performed -= instance.OnMainAction;
+            @MainAction.canceled -= instance.OnMainAction;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -296,6 +296,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
-        void OnShoot(InputAction.CallbackContext context);
+        void OnMainAction(InputAction.CallbackContext context);
     }
 }
