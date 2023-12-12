@@ -94,13 +94,13 @@ public class Player : MonoBehaviour, IItemCarrier {
     private void Throw() {
         IThrowable throwable = carryableItem as IThrowable;
         carryableItem.RemoveCarrier();
-        throwable?.Throw(transform.forward * throwStrength);        
+        throwable?.Throw((transform.forward + transform.up) * throwStrength);        
     }
 
     public (float, float, Vector3) GetThrowingObjectData() {
         IThrowable throwable = carryableItem as IThrowable;
         if (throwable != null) {
-            return (throwable.GetMass(), throwStrength, transform.forward);
+            return (throwable.GetMass(), throwStrength, transform.forward + transform.up);
         }
         return (0f, 0f, Vector3.zero);
     }
