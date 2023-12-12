@@ -238,7 +238,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
-  turnSmoothVelocity: 0
+  playerHeight: 2
+  playerRadius: 0.55
+  throwStrength: 3
   cameraPosition: {fileID: 0}
   input: {fileID: 0}
   mountingPoint: {fileID: 1360286899294847327}
