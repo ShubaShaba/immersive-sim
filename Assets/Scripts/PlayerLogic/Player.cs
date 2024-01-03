@@ -99,8 +99,17 @@ public class Player : MonoBehaviour, IItemCarrier {
     }
 
     private Vector3 ThrowDirection() {
-        float baseAngle = -45f;
-        return Quaternion.AngleAxis(baseAngle, transform.right) * transform.forward; 
+        // TODO: Refactor + adjust for the intial height 
+        IThrowable throwable = carryableItem as IThrowable;
+        if (throwable != null) {
+            float startVelocity = throwStrength / throwable.GetMass();
+            float destination = Vector3.Distance(mountingPoint.position, input.GetCursorPosition());
+            float baseAngle = (float) 1/2 * Mathf.Asin((float)(9.8*destination)/(startVelocity*startVelocity));
+            if ((float)(9.8*destination) < startVelocity*startVelocity){
+                return Quaternion.AngleAxis(-baseAngle * Mathf.Rad2Deg, transform.right) * transform.forward;
+            }
+        }
+        return Vector3.zero; 
     }
 
     public (float, float, Vector3) GetThrowingObjectData() {
