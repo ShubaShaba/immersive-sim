@@ -95,27 +95,28 @@ public class Player : MonoBehaviour, IItemCarrier {
         IThrowable throwable = carryableItem as IThrowable;
         carryableItem.RemoveCarrier();
         // throwable?.Throw((transform.forward + transform.up) * throwStrength);
-        throwable?.Throw(ThrowDirection() * throwStrength);        
+        throwable?.Throw(ThrowDirection(throwable.GetMass()) * throwStrength);        
     }
 
-    private Vector3 ThrowDirection() {
-        // TODO: Refactor + adjust for the intial height 
-        IThrowable throwable = carryableItem as IThrowable;
-        if (throwable != null) {
-            float startVelocity = throwStrength / throwable.GetMass();
-            float destination = Vector3.Distance(mountingPoint.position, input.GetCursorPosition());
-            float baseAngle = (float) 1/2 * Mathf.Asin((float)(9.8*destination)/(startVelocity*startVelocity));
-            if ((float)(9.8*destination) < startVelocity*startVelocity){
-                return Quaternion.AngleAxis(-baseAngle * Mathf.Rad2Deg, transform.right) * transform.forward;
-            }
-        }
-        return Vector3.zero; 
+    private Vector3 ThrowDirection(float throwableMass) {
+        // TODO: Refactor
+        float startVelocity = throwStrength / throwableMass;
+        float horizontalDestination = Vector3.Distance(mountingPoint.position, input.GetCursorPosition());
+        float initialHeight = mountingPoint.position.y;
+
+        //Calculating the angle:
+        float phaseShift = Mathf.Atan(horizontalDestination/initialHeight);
+        float aConstant = 9.8f * Mathf.Pow(horizontalDestination, 2) / (2 * Mathf.Pow(startVelocity, 2));
+        float angleTimes2 = Mathf.Acos((2*aConstant-initialHeight) / Mathf.Sqrt(Mathf.Pow(initialHeight, 2) + Mathf.Pow(horizontalDestination, 2))) + phaseShift;
+        float angle = angleTimes2 / 2;
+        return Quaternion.AngleAxis(-angle * Mathf.Rad2Deg, transform.right) * transform.forward;
+        // return Quaternion.AngleAxis(-60, transform.right) * transform.forward;
     }
 
     public (float, float, Vector3) GetThrowingObjectData() {
         IThrowable throwable = carryableItem as IThrowable;
         if (throwable != null) {
-            return (throwable.GetMass(), throwStrength, ThrowDirection());
+            return (throwable.GetMass(), throwStrength, ThrowDirection(throwable.GetMass()));
         }
         return (0f, 0f, Vector3.zero);
     }
