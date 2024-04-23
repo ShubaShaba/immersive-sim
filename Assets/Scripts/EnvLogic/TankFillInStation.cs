@@ -2,50 +2,62 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankFillInStation : MonoBehaviour, IInteractable, IItemCarrier, ShootingTarget {
+public class TankFillInStation : MonoBehaviour, IInteractable, IItemCarrier, ShootingTarget
+{
     // TODO: Create a base class for item carriers and carriable items (possibly)
     [SerializeField] private Transform mountingPoint;
     private Tank tank;
-    
-    void IInteractable.Interact(Transform interactor) {
+
+    void IInteractable.Interact(Transform interactor)
+    {
         IItemCarrier carrier = null;
         interactor.TryGetComponent(out carrier);
         if (carrier == null) return;
 
-        if (IsEmpty() && !carrier.IsEmpty()) {
+        if (IsEmpty() && !carrier.IsEmpty())
+        {
             carrier.GetItem().SetCarrier(this);
-        } else if(!IsEmpty() && carrier.IsEmpty()) {
+        }
+        else if (!IsEmpty() && carrier.IsEmpty())
+        {
             tank.SetCarrier(carrier);
         }
     }
 
-    string IInteractable.getInteractHint() {
+    string IInteractable.getInteractHint()
+    {
         return "Fill in the tank";
     }
-    
-    public Transform GetMountingPoint () {
+
+    public Transform GetMountingPoint()
+    {
         return mountingPoint;
     }
 
-    public bool Inject(ICarryableItem item) {
+    public bool Inject(ICarryableItem item)
+    {
         bool isTank = item is Tank;
-        if (isTank && IsEmpty()) tank = (Tank) item;
+        if (isTank && IsEmpty()) tank = (Tank)item;
         return isTank;
     }
 
-    public void Eject() {
+    public void Eject()
+    {
         tank = null;
     }
 
-    public bool IsEmpty() {
+    public bool IsEmpty()
+    {
         return tank == null;
     }
 
-    public ICarryableItem GetItem() {
+    public ICarryableItem GetItem()
+    {
         return tank;
     }
 
-    void ShootingTarget.OnHit() {
+    void ShootingTarget.OnHit()
+    {
         Debug.Log(gameObject);
     }
 }

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu()]
-public class ItemSO : ScriptableObject {
+public class ItemSO : ScriptableObject
+{
     [SerializeField] private Transform prefab;
     [SerializeField] private Sprite sprite;
     [SerializeField] private string objectName;

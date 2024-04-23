@@ -7,27 +7,32 @@ using UnityEngine;
     TODO: base carrieable object class
     Need to include Inject() method returns false*
 */
-public class Tank : MonoBehaviour, ICarryableItem, IThrowable, ShootingTarget {
+public class Tank : MonoBehaviour, ICarryableItem, IThrowable, ShootingTarget
+{
     [SerializeField] private ItemSO tankSO;
     private IItemCarrier carrier;
     private Rigidbody rb;
 
-    private void Awake() {
+    private void Awake()
+    {
         rb = GetComponent<Rigidbody>();
         EnablePhysics(false);
     }
 
-    private void EnablePhysics(bool enable) {
+    private void EnablePhysics(bool enable)
+    {
         rb.isKinematic = !enable;
         rb.detectCollisions = enable;
         rb.freezeRotation = !enable;
     }
 
-    public ItemSO getTankSO() {
+    public ItemSO getTankSO()
+    {
         return tankSO;
     }
 
-    public void SetCarrier(IItemCarrier carrier) {
+    public void SetCarrier(IItemCarrier carrier)
+    {
         if (!carrier.IsEmpty()) return;
         this.carrier?.Eject();
 
@@ -39,22 +44,26 @@ public class Tank : MonoBehaviour, ICarryableItem, IThrowable, ShootingTarget {
         transform.localRotation = Quaternion.identity;
     }
 
-    public void RemoveCarrier() {
+    public void RemoveCarrier()
+    {
         carrier?.Eject();
-        carrier = null; 
+        carrier = null;
         transform.parent = null;
         EnablePhysics(true);
     }
 
-    public IItemCarrier ReturnCarrier() {
+    public IItemCarrier ReturnCarrier()
+    {
         return carrier;
     }
-    
-    void ShootingTarget.OnHit() {
+
+    void ShootingTarget.OnHit()
+    {
         Debug.Log(gameObject);
     }
 
-    Rigidbody IThrowable.GetRigidbody() {
+    Rigidbody IThrowable.GetRigidbody()
+    {
         return rb;
     }
 }

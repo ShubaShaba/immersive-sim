@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
 
-public class PlayerInput : MonoBehaviour {
+public class PlayerInput : MonoBehaviour
+{
     private PlayerInputActions playerInputActions;
     [SerializeField] private Player player;
     [SerializeField] private Transform cursorPosition;
@@ -12,18 +13,21 @@ public class PlayerInput : MonoBehaviour {
     public static IInteractable selectedInteractable { get; private set; }
     private PlayerInputActions.PlayerActions playersActions;
 
-    private void Awake() {
+    private void Awake()
+    {
         playerInputActions = new PlayerInputActions();
         playersActions = playerInputActions.Player;
-        playerInputActions.Player.Enable();
+        playersActions.Enable();
     }
-    
-    private void Update() {
+
+    private void Update()
+    {
         InteractableSelectionPosBased(player.transform);
     }
 
     // Selects an interactable object based on current Player's position
-    private void InteractableSelectionPosBased(Transform interactionTransform) {
+    private void InteractableSelectionPosBased(Transform interactionTransform)
+    {
         float interactionDistance = 2f;
         bool interactionWithinReach = Physics.Raycast(interactionTransform.position, interactionTransform.forward, out RaycastHit interactionObject, interactionDistance);
         Transform interactableTransform = interactionWithinReach ? interactionObject.transform : null;
@@ -32,42 +36,68 @@ public class PlayerInput : MonoBehaviour {
         SelectInteractableVisual(interactableTransform);
     }
 
-    private void SelectInteractable(Transform interactableTransform) {
-        if (interactableTransform == null) {
+    private void SelectInteractable(Transform interactableTransform)
+    {
+        if (interactableTransform == null)
+        {
             selectedInteractable = null;
-        } else {
+        }
+        else
+        {
             interactableTransform.TryGetComponent(out IInteractable interactable);
             selectedInteractable = interactable;
         }
     }
 
-    /* Updates the reference to the selected interactable's visual and notifies it
-     * In case the selected interactable has changed, both new and previous visuals get notification
-     */
-    private void SelectInteractableVisual(Transform interactableTransform) {
+    /*
+        Updates the reference to the selected interactable's visual and notifies it
+        In case the selected interactable has changed, both new and previous visuals get notification
+    */
+    private void SelectInteractableVisual(Transform interactableTransform)
+    {
         selectedInteractableVisual?.Notify();
-        if (interactableTransform == null || !interactableTransform.TryGetComponent(out InteractableSelectionVisual interactableVisual)) {
+        if (interactableTransform == null || !interactableTransform.TryGetComponent(out InteractableSelectionVisual interactableVisual))
+        {
             selectedInteractableVisual = null;
-        } else {
+        }
+        else
+        {
             selectedInteractableVisual = interactableVisual;
             selectedInteractableVisual.Notify();
         }
     }
 
-    public Vector3 GetInputDirectionNormalized() {
+    public Vector3 GetInputDirectionNormalized()
+    {
         Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
         return new Vector3(inputVector.x, 0, inputVector.y).normalized;
     }
 
-    public PlayerInputActions.PlayerActions GetPlayersActions() {
-        return playersActions; 
+    public void AddPlayersAction(PlayersActionType type, Action<InputAction.CallbackContext> action)
+    {
+        switch (type)
+        {
+            case PlayersActionType.Main:
+                playersActions.MainAction.performed += action;
+                break;
+            case PlayersActionType.Aim:
+                playersActions.Aim.performed += action;
+                break;
+            case PlayersActionType.Interact:
+                playersActions.Interact.performed += action;
+                break;
+            default:
+                break;
+        }
     }
 
-    public Vector3 GetCursorPosition() {
+    public Vector3 GetCursorPosition()
+    {
         return cursorPosition.position;
     }
 
-    public Player GetPlayer() {
+    public Player GetPlayer()
+    {
         return player;
     }
 }

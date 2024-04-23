@@ -240,7 +240,7 @@ MonoBehaviour:
   moveSpeed: 7
   playerHeight: 2
   playerRadius: 0.55
-  throwStrength: 3
+  throwStrength: 9
   cameraPosition: {fileID: 0}
   input: {fileID: 0}
   mountingPoint: {fileID: 1360286899294847327}
